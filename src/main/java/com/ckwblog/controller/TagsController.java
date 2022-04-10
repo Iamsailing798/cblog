@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Random;
+
 @RestController
 @RequestMapping("tags")
 public class TagsController {
@@ -63,6 +65,9 @@ public class TagsController {
             return Result.fail(10001,"不能为空");
         }
         else{
+            Random r=new Random();
+            int rn=r.nextInt(5)+1;
+            tag.setAvatar("/static/tag/tag"+rn+".png");
             tagService.saveOrUpdate(tag);
         }
         return Result.success(null);

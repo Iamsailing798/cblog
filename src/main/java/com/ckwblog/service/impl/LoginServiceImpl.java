@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -109,8 +110,11 @@ public class LoginServiceImpl implements LoginService {
         sysUser.setPassword(DigestUtils.md5Hex(password+slat));
         sysUser.setCreateDate(System.currentTimeMillis());
         sysUser.setLastLogin(System.currentTimeMillis());
-        sysUser.setAvatar("/static/img/logo.b3a48c0.png");
-        sysUser.setAdmin(1); //1 为true
+        //生成随机数，随机avatar
+        Random r=new Random();
+        int rn=r.nextInt(5)+1;
+        sysUser.setAvatar("/static/user/user_"+rn+".png");
+        sysUser.setAdmin(0); //1 为true
         sysUser.setDeleted(0); // 0 为false
         sysUser.setSalt("");
         sysUser.setStatus("");

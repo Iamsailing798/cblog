@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Random;
+
 @RestController
 @RequestMapping("categorys")
 public class CategoryController {
@@ -56,6 +58,9 @@ public class CategoryController {
             return Result.fail(10001,"不能为空");
         }
         else{
+            Random r=new Random();
+            int rn=r.nextInt(5)+1;
+            type.setAvatar("/static/category/c"+rn+".png");
             categoryService.saveOrUpdate(type);
         }
         return Result.success(null);

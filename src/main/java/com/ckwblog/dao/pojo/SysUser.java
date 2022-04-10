@@ -9,7 +9,7 @@ public class SysUser {
 
     private String account;
 
-    private Integer admin=0;
+    private Integer admin;
 
     private String avatar;
 

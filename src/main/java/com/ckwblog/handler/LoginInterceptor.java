@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private AdminInterceptor adminInterceptor;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //在执行controller方法(Handler)之前进行执行
@@ -51,6 +56,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
         SysUser sysUser = loginService.checkToken(token);
+
+        adminInterceptor.getSysUser(sysUser.getAccount());
+
         if (sysUser == null){
             Result result = Result.fail(ErrorCode.NO_LOGIN.getCode(), "未登录");
             response.setContentType("application/json;charset=utf-8");
